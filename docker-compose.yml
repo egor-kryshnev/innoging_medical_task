@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+  back:
+    build: 
+      context: ./innoging_medical_backend/.
+      dockerfile: Dockerfile
+    ports:
+      - 3456:3456
+    environment:
+      - PORT=3456
+    networks:
+      default:
+        aliases:
+          - back
+  front:
+    build: 
+      context: ./innoging_medical_canvas/.
+      dockerfile: Dockerfile
+    ports:
+      - 3333:3000
+    environment:
+      - WDS_SOCKET_PORT=3333
+      - PORT=3000
+      - REACT_APP_ENV=dev
+      - REACT_APP_API_PORT=3456
+      - REACT_APP_API_URL=http://localhost
+      - REACT_APP_API_COLOR_ENDPOINT=api/color
+      - REACT_APP_API_SHAPE_ENDPOINT=api/shape
+    links:
+      - back
+    depends_on:
+      - back
+    networks:
+      default:
+        aliases:
+          - front
