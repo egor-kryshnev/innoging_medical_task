@@ -79,15 +79,13 @@ const CanvasComponent = () => {
             canvas.height = canvas.offsetHeight;
             const context = canvas.getContext('2d');
             context.lineCap = "round";
-            context.strokeStyle = reduxColor;
-            context.fillStyle = reduxColor;
             context.lineWidth = 3;
             contextRef.current = context;
     
             const canvasOffSet = canvas.getBoundingClientRect();
             canvasOffSetX.current = canvasOffSet.top;
             canvasOffSetY.current = canvasOffSet.left;
-    }, [reduxColor, reduxShape])
+    }, [])
 
     const startDrawing = ({nativeEvent}) => {
         nativeEvent.preventDefault();
@@ -113,8 +111,8 @@ const CanvasComponent = () => {
         const rectWidht = newMouseX - startX.current;
         const rectHeight = newMouseY - startY.current;
 
-        contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-
+        contextRef.current.strokeStyle = reduxColor;
+        contextRef.current.fillStyle = reduxColor;
         drawShape(contextRef.current, startX.current, startY.current, rectWidht, rectHeight, newMouseX, newMouseY);
 
     }
